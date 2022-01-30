@@ -1,5 +1,9 @@
 <div>
-  <h1 style="text-align: center">My Bar Chart</h1>
+  <h1 style="text-align: center">Sorting Visualiser</h1>
+  <div class="slidecontainer">
+    <input type="range" min="1" max="30" value="defaultBarSize" class="slider" id="arraySizeRange"
+      (change)="resizeChart($event)">
+  </div>
 </div>
 <div class="chart">
   <canvas baseChart [datasets]="barChartData" [labels]="barChartLabels" [options]="barChartOptions"

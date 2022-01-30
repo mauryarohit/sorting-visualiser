@@ -1,11 +1,11 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
-export class AppComponent {
+export class AppComponent implements OnInit {
   barChartOptions = {
     type: 'bar',
     maintainAspectRatio: false,
@@ -25,19 +25,34 @@ export class AppComponent {
       }
     }
   };
-  barChartLabels = ['2000', '2001', '2002', '2003', '2004', '2005'];
+  barChartLabels = [];
   barChartLegend = false;
-  barChartData = [
-    {
-      data: [75, 49, 89, 31, 86, 35, 50],
-      backgroundColor: [
-        'red',
-        'blue',
-        'red',
-        'red',
-        'red',
-        'red',
-      ]
-    },
-  ];
+  barChartData: any;
+
+  defaultBarSize = 15;
+
+  ngOnInit(): void {
+    this.resizeChart({ currentTarget: { value: this.defaultBarSize } });
+  }
+
+  resizeChart(event: any) {
+    const size = event.currentTarget.value;
+    const array = [], backgroundColor = [], borderColor = [];
+    for (let i = 1; i <= size; i++) {
+      array.push(Math.ceil(Math.random() * 10 + 1));
+      backgroundColor.push('cyan');
+      borderColor.push('red');
+    }
+    this.barChartData = [
+      {
+        data: [...array],
+        backgroundColor: [...backgroundColor],
+        barThickness: window.innerWidth / (array.length * 2),
+        // borderColor: [...borderColor],
+        // borderWidth: 3,
+        barPercentage: 0.5,
+      },
+    ];
+    this.barChartLabels = this.barChartData[0].data;
+  }
 }
